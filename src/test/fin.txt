@@ -1,0 +1,42 @@
+go est
+
+go ouest
+
+go ouest
+
+go ouest
+
+go sud
+
+prendre clefReserve
+
+go nord
+
+go est
+
+go est
+
+deverrouiller nord
+go nord
+
+prendre clefBureauDuDirecteur
+
+go sud
+
+go ouest
+
+go ouest
+
+go nord
+
+deverrouiller est
+go est
+
+prendre clefSortie
+go ouest
+
+go sud
+
+go ouest
+deverrouiller ouest
+go ouest

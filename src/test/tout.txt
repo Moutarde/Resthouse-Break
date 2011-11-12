@@ -1,0 +1,21 @@
+go ouest
+go nord
+go nord
+go est
+go nord
+inspecter seringue
+prendre seringue
+jeter seringue
+prendre VitamineC
+manger VitamineC
+go sud
+go est
+voir
+go ouest
+go ouest
+go sud
+go ouest
+manger
+back
+go sud
+15
