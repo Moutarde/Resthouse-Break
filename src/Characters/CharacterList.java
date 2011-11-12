@@ -8,9 +8,11 @@ import java.util.HashMap;
  * @author Charlet Pierre, Kniebihler Nicolas, Provost Kevin
  * @version 1.0 (mai 2009)
  */
-public class CharacterList<String, NPC> extends HashMap<String, NPC>
+public class CharacterList extends HashMap<String, NPC>
 {
-    /**
+    private static final long serialVersionUID = 7910236785870346322L;
+
+	/**
      * Constructor for objects of class CharacterList
      */
     public CharacterList()

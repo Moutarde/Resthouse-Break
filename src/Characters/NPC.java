@@ -1,6 +1,6 @@
 package Characters;
 
-import Objets.*;
+import Objets.ItemList;
 
 
 /**
@@ -14,7 +14,7 @@ public class NPC
     private String name;
     private String description;
     private String talk;
-    private ItemList<String, Item> bag;
+    private ItemList bag;
     
     
     /**
@@ -25,7 +25,7 @@ public class NPC
         this.name = name;
         this.description = description;
         this.talk = talk;
-        bag = new ItemList<String, Item>();
+        bag = new ItemList();
     } //Character(.)
     
     /**
@@ -55,7 +55,7 @@ public class NPC
     /**
      * @return The player's bag.
      */
-    public ItemList<String, Item> getBag()
+    public ItemList getBag()
     {
         return bag;
     } //getBag()

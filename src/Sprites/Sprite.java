@@ -3,8 +3,6 @@ package Sprites;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-import Games.Matrix;
-
 /**
  * A sprite to be displayed on the screen. Note that a sprite
  * contains no state information, i.e. its just the image and 

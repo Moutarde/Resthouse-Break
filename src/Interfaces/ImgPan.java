@@ -1,16 +1,9 @@
 package Interfaces;
 
-import Characters.Figure;
-import Sprites.Coord;
-import Sprites.Sprite;
-
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.URL;
-import javax.imageio.ImageIO;
+
 import javax.swing.JPanel;
 
 
@@ -19,6 +12,7 @@ import javax.swing.JPanel;
  *
  */
 public class ImgPan extends JPanel {
+	private static final long serialVersionUID = 4571407618856017796L;
 	private BufferedImage bgImage;
 	
 	public ImgPan(BufferedImage bgImage) {
@@ -26,7 +20,7 @@ public class ImgPan extends JPanel {
 		this.bgImage = bgImage;
 	}
 
-	public void paintComponent(Graphics g){
+	@Override public void paintComponent(Graphics g){
 		super.paintComponent(g);
 
 		g.setColor(Color.white);

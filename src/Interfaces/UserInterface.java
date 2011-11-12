@@ -62,10 +62,10 @@ public class UserInterface implements ActionListener
 	} //println(.)
 
 	/**
-	 * Show an image file in the interface.
+	 * Show an image file in the interface
+	 * and the characters' images on it.
 	 */
-	public void showImage()
-	{
+	public void showImageAndCharacter() {
 		new Thread(new Runnable() {
 			public void run() {
 				try {
@@ -78,7 +78,13 @@ public class UserInterface implements ActionListener
 						final BufferedImage bg = ImageIO.read(imageURL);
 						SwingUtilities.invokeLater(new Runnable() {
 							public void run() {
+								characPan.clearFigures();
 								imgPan.setBgImage(bg);
+								int xPos = (imgPan.getWidth()/2) - (imgPan.getBgImage().getWidth()/2);
+								int yPos = (imgPan.getHeight()/2) - (imgPan.getBgImage().getHeight()/2);
+								characPan.setLocation(xPos, yPos);
+								characPan.setSize(new Dimension(imgPan.getBgImage().getWidth(), imgPan.getBgImage().getHeight()));
+								characPan.addFigure(engine.getGameModel().getPlayer().getFigure().clone());
 							}
 						});
 					}
@@ -90,22 +96,6 @@ public class UserInterface implements ActionListener
 		}).start();
 
 		myFrame.pack();
-	} //showImage(.)
-
-	public void showCharacter() {
-		new Thread(new Runnable() {
-			public void run() {
-				final int xPos = (imgPan.getWidth()/2) - (imgPan.getBgImage().getWidth()/2);
-				final int yPos = (imgPan.getHeight()/2) - (imgPan.getBgImage().getHeight()/2);
-				SwingUtilities.invokeLater(new Runnable() {
-					public void run() {
-						characPan.setLocation(xPos, yPos);
-						characPan.setPreferredSize(new Dimension(imgPan.getBgImage().getWidth(), imgPan.getBgImage().getHeight()));
-						characPan.addFigure(engine.getGameModel().getPlayer().getFigure());
-					}
-				});
-			}
-		}).start();
 	}
 
 	public void animateCharacter(String direction) {
@@ -133,16 +123,6 @@ public class UserInterface implements ActionListener
 
 		final Figure f1 = f.clone();
 
-		new Thread(new Runnable() {
-			public void run() {
-				SwingUtilities.invokeLater(new Runnable() {
-					public void run() {
-						characPan.addFigure(f1);
-					}
-				});
-			}
-		}).start();
-
 		if(direction.equals("est")) {
 			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3 + Matrix.CASE_SIZE/2, y * Matrix.CASE_SIZE - 5));
 			f.setPosture(Sprite.showRight);
@@ -162,16 +142,6 @@ public class UserInterface implements ActionListener
 
 		final Figure f2 = f.clone();
 
-		new Thread(new Runnable() {
-			public void run() {
-				SwingUtilities.invokeLater(new Runnable() {
-					public void run() {
-						characPan.addFigure(f2);
-					}
-				});
-			}
-		}).start();
-
 		if(direction.equals("est")) {
 			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3 + 3 * Matrix.CASE_SIZE/4, y * Matrix.CASE_SIZE - 5));
 			f.setPosture(Sprite.goRight2);
@@ -190,16 +160,6 @@ public class UserInterface implements ActionListener
 		}
 
 		final Figure f3 = f.clone();
-
-		new Thread(new Runnable() {
-			public void run() {
-				SwingUtilities.invokeLater(new Runnable() {
-					public void run() {
-						characPan.addFigure(f3);
-					}
-				});
-			}
-		}).start();
 
 		if(direction.equals("est")) {
 			f.setCoord(new Coord((x + 1) * Matrix.CASE_SIZE - 3, y * Matrix.CASE_SIZE - 5));
@@ -224,6 +184,9 @@ public class UserInterface implements ActionListener
 			public void run() {
 				SwingUtilities.invokeLater(new Runnable() {
 					public void run() {
+						characPan.addFigure(f1);
+						characPan.addFigure(f2);
+						characPan.addFigure(f3);
 						characPan.addFigure(f4);
 					}
 				});
@@ -275,7 +238,7 @@ public class UserInterface implements ActionListener
 		}
 		imgPan.setPreferredSize(new Dimension(1000, 527));
 		
-		characPan = new CharacPan(engine.getGameModel().getPlayer().getFigure());
+		characPan = new CharacPan();
 		characPan.setOpaque(false);
 		int xPos = (imgPan.getWidth()/2) - (imgPan.getBgImage().getWidth()/2);
 		int yPos = (imgPan.getHeight()/2) - (imgPan.getBgImage().getHeight()/2);

@@ -1,5 +1,9 @@
 package Games;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
+
+import Sprites.Coord;
 
 /**
  * D�crivez votre classe Doors ici.
@@ -9,7 +13,7 @@ import java.util.ArrayList;
  */
 public class Door
 {
-    private ArrayList<Room> corresRooms;
+    private HashMap<Room, Coord> corresRooms;
     private boolean isLocked;
     
     private static ArrayList<Door> allDoors = new ArrayList<Door>();
@@ -17,11 +21,11 @@ public class Door
     /**
      * Constructor for objects of class Doors.
      */
-    public Door(Room room1, Room room2, boolean locked)
+    public Door(Room room1, Coord coord1, Room room2, Coord coord2, boolean locked)
     {
-        corresRooms = new ArrayList<Room>();
-        corresRooms.add(room1);
-        corresRooms.add(room2);
+        corresRooms = new HashMap<Room, Coord>();
+        corresRooms.put(room1, coord1);
+        corresRooms.put(room2, coord2);
         isLocked = locked;
     } //Door(.)
     
@@ -53,10 +57,14 @@ public class Door
     /**
      * @return The list of the correspondant rooms.
      */
-    public ArrayList<Room> getCorresRooms()
+    public Set<Room> getCorresRooms()
     {
-        return corresRooms;
+        return corresRooms.keySet();
     } //getCorresRooms()
+    
+    public HashMap<Room, Coord> getRoomsAndCoords(){
+    	return corresRooms;
+    }
     
     /**
      * @return The list of all the doors in the game.
@@ -65,4 +73,15 @@ public class Door
     {
         return allDoors;
     } //getAllDoors()
+
+	public Room getNeighborRoom(Room room) {
+        for (Room neighbor : this.getCorresRooms())
+        {
+            if (neighbor != room)
+            {
+                return neighbor;
+            } //if
+        } //foreach
+		return null;
+	}
 } //Door

@@ -1,7 +1,11 @@
 package Games;
 
-import Objets.*;
-import Characters.*;
+import Characters.Figure;
+import Characters.NPC;
+import Objets.Item;
+import Objets.ItemList;
+import Objets.Key;
+import Sprites.Coord;
 
 /**
  * 
@@ -13,7 +17,7 @@ public class Player
 {
     private Room currentRoom;
     private String name;
-    private ItemList<String, Item> bag;
+    private ItemList bag;
     private int teethNb;
     private int maxWeight;
     private int carriedWeight;
@@ -34,7 +38,7 @@ public class Player
         teethNb = startSaving;
         this.maxWeight = maxWeight;
         stepNb = startStep;
-        bag = new ItemList<String, Item>();
+        bag = new ItemList();
         xPosition = x;
         yPosition = y;
         this.figure = figure;
@@ -60,7 +64,7 @@ public class Player
     /**
      * @return The player's bag.
      */
-    public ItemList<String, Item> getBag()
+    public ItemList getBag()
     {
         return bag;
     } //getBag()
@@ -134,12 +138,19 @@ public class Player
 			System.out.println("Wrong direction : " + direction);
 		}
 	}
+	
+	public void setPosition(Coord c) {
+		this.xPosition = c.getX();
+		this.yPosition = c.getY();
+		this.figure.setCoord(new Coord(c.getX() * Matrix.CASE_SIZE - 3, c.getY() * Matrix.CASE_SIZE - 5));
+	}
     
     /**
      * Replace the current room by the room in parameter.
      */
-    public void goRoom(Room nextRoom)
+    public void goRoom(Room nextRoom, String direction)
     {
+    	this.setPosition(currentRoom.getDoor(direction).getRoomsAndCoords().get(nextRoom));
         currentRoom = nextRoom;
     } //goRoom(.)
     

@@ -43,14 +43,14 @@ public class CommandWords
         commands.put(CommandWord.SEE, new SeeCommand());
         commands.put(CommandWord.TAKE, new TakeCommand());
         commands.put(CommandWord.DROP, new DropCommand());
-        commands.put(CommandWord.TO, new ToCommand());
+        //commands.put(CommandWord.TO, new ToCommand());
         commands.put(CommandWord.LOCK, new LockCommand());
         commands.put(CommandWord.UNLOCK, new UnlockCommand());
         commands.put(CommandWord.USEITEM, new UseCommand());
         commands.put(CommandWord.INSPECT, new InspectCommand());
         commands.put(CommandWord.TEST, new TestCommand());
         commands.put(CommandWord.INSPECTBAG, new InspectBagCommand());
-        commands.put(CommandWord.BACK, new BackCommand());
+        //commands.put(CommandWord.BACK, new BackCommand());
         commands.put(CommandWord.TALK, new TalkCommand());
         commands.put(CommandWord.BUY, new BuyCommand());
     }

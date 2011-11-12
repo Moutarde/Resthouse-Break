@@ -8,9 +8,11 @@ import java.util.HashMap;
  * @author Charlet Pierre, Kniebihler Nicolas, Provost Kevin
  * @version 1.0 (mai 2009)
  */
-public class ItemList<String, Item> extends HashMap<String, Item>
-{
-    /**
+public class ItemList extends HashMap<String, Item>
+{	
+    private static final long serialVersionUID = 1059933136985453840L;
+
+	/**
      * Constructor for objects of class ItemList
      */
     public ItemList()

@@ -70,7 +70,7 @@ public class GoCommand extends Command
 	                } //if
 	            } //foreach
 	            
-	            engine.getGameModel().goRoom(nextRoom);
+	            engine.getGameModel().goRoom(nextRoom, direction);
 	            engine.getTextView().show("\n" + "nombre de pas restant : " +engine.getGameModel().getPlayer().getStepNb()+ "\n");
 	            engine.getGameModel().getPlayer().setLastTalk(null);
 	        } //else

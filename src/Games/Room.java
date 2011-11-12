@@ -2,6 +2,7 @@ package Games;
 
 import java.util.HashMap;
 import Objets.*;
+import Sprites.Coord;
 import Characters.*;
 
 /**
@@ -22,8 +23,8 @@ public class Room
 {
     private String description;
     private HashMap<String, Door> doors;
-    private ItemList<String, Item> items;
-    private CharacterList<String, NPC> characters;
+    private ItemList items;
+    private CharacterList characters;
     private String imageName;
     private int [][] matrix;
     
@@ -39,8 +40,8 @@ public class Room
     {
         this.description = description;
         doors = new HashMap<String, Door>();
-        items = new ItemList<String, Item>();
-        characters = new CharacterList<String, NPC>();
+        items = new ItemList();
+        characters = new CharacterList();
         imageName = image;
         matrix = m;
     } //Room(.)
@@ -51,9 +52,9 @@ public class Room
      * @param neighbor The room in the given direction.
      * @param locked True if the door in this direction is locked, false if it is not.
      */
-    public void setExit(String direction, Room neighbor, boolean locked)
+    public void setExit(String direction, Coord roomCoord, Room neighbor, Coord neighborCoord, boolean locked)
     {
-        Door door = new Door(this,neighbor,locked);
+        Door door = new Door(this, roomCoord, neighbor, neighborCoord, locked);
 //         Door testDoor = new Door(neighbor,this,locked);
 //         if (!doors.containsValue(testDoor)) {
             doors.put(direction, door);
@@ -123,16 +124,11 @@ public class Room
         
         if (door != null)
         {
-            for (Room room : door.getCorresRooms())
-            {
-                if (room != this)
-                {
-                    return room;
-                } //if
-            } //foreach
+        	return door.getNeighborRoom(this);
         } //if
-
-        return null;
+        else {
+        	return null;
+        }
     } //getExit(.)
     
     /**
@@ -146,7 +142,7 @@ public class Room
     /**
      * @return The list of all the items in the room.
      */
-    public ItemList<String, Item> getItems()
+    public ItemList getItems()
     {
         return items;
     } //getItems()
@@ -154,7 +150,7 @@ public class Room
     /**
      * @return The list of all the characters in the room.
      */
-    public CharacterList<String, NPC> getCharacters()
+    public CharacterList getCharacters()
     {
         return characters;
     } //getCharacters()

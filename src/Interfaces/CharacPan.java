@@ -11,16 +11,16 @@ import Characters.Figure;
  *
  */
 public class CharacPan extends JPanel {
+	private static final long serialVersionUID = 6824100793455062135L;
 	private LinkedList<Figure> figures;
 	
-	public CharacPan(Figure figure) {
+	public CharacPan() {
 		super();
 		
 		this.figures = new LinkedList<Figure>();
-		this.addFigure(figure);
 	}
 
-	public void paintComponent(Graphics g){
+	@Override public void paintComponent(Graphics g){
 		super.paintComponent(g);
 
 		if(figures.isEmpty()) {
@@ -50,6 +50,10 @@ public class CharacPan extends JPanel {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public void clearFigures() {
+		figures.clear();
 	}
 	
 	public void addFigure(Figure figure) {

@@ -15,7 +15,7 @@ import java.util.StringTokenizer;
  */
 public class ImageView implements Observer
 {
-    private GameModel gameModel;
+    //private GameModel gameModel;
     private UserInterface gui;
     
     /**
@@ -23,7 +23,7 @@ public class ImageView implements Observer
      */
     public ImageView(GameModel gameModel)
     {
-        this.gameModel = gameModel;
+        //this.gameModel = gameModel;
     } //TextView(.)
     
     /**
@@ -32,17 +32,8 @@ public class ImageView implements Observer
     public void setGUI(UserInterface userInterface)
     {
         gui = userInterface;
-        showImage();
+        gui.showImageAndCharacter();
     } //setGUI(.)
-    
-    /**
-     * Shows the current room's image.
-     */
-    public void showImage()
-    {
-        gui.showImage();
-        gui.showCharacter();
-    } //show(.)
     
     /**
      * Updates the current room's image when the player changes location.
@@ -50,7 +41,7 @@ public class ImageView implements Observer
     public void update(Observable o, Object arg)
     {
     	if(arg == null) {
-    		showImage();
+    		gui.showImageAndCharacter();
     	}
     	else if(arg instanceof String) {
     		String word1;
