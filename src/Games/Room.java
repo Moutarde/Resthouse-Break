@@ -1,6 +1,9 @@
 package Games;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+
 import Objets.*;
 import Sprites.Coord;
 import Characters.*;
@@ -52,9 +55,15 @@ public class Room
      * @param neighbor The room in the given direction.
      * @param locked True if the door in this direction is locked, false if it is not.
      */
-    public void setExit(String direction, Coord roomCoord, Room neighbor, Coord neighborCoord, boolean locked)
+    public void setExit(String direction,
+    					ArrayList<Coord> roomCoords, Coord roomStartCoord,
+    					Room neighbor, ArrayList<Coord> neighborCoord, Coord neighborStartCoord,
+    					boolean locked)
     {
-        Door door = new Door(this, roomCoord, neighbor, neighborCoord, locked);
+        Door door = new Door(this,
+        					 roomCoords, roomStartCoord,
+        					 neighbor, neighborCoord, neighborStartCoord,
+        					 locked);
 //         Door testDoor = new Door(neighbor,this,locked);
 //         if (!doors.containsValue(testDoor)) {
             doors.put(direction, door);
@@ -118,9 +127,15 @@ public class Room
      * that direction, return null.
      * @return The room that corresponds with the direction given in parameter.
      */
-    public Room getExit(String direction)
+    public Room getExit(Coord caseCoord)
     {
-        Door door = getDoor(direction);
+    	Door door = null;
+    	
+        for(Door d : doors.values()) {
+        	if(d.containsCoord(caseCoord, this)){
+        		door = d;
+        	}
+        }
         
         if (door != null)
         {
@@ -219,4 +234,13 @@ public class Room
     public int[][] getMatrix(){
     	return matrix;
     }
+
+	public String getRelativePositionWith(Room room) {
+		for(Map.Entry<String, Door> e : doors.entrySet()) {
+			if(e.getValue().getCorresRooms().contains(room)) {
+				return e.getKey();
+			}
+		}
+		return null;
+	}
 } //Room

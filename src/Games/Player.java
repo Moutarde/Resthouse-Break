@@ -150,7 +150,7 @@ public class Player
      */
     public void goRoom(Room nextRoom, String direction)
     {
-    	this.setPosition(currentRoom.getDoor(direction).getRoomsAndCoords().get(nextRoom));
+    	this.setPosition(currentRoom.getDoor(direction).getStartCoord(nextRoom));
         currentRoom = nextRoom;
     } //goRoom(.)
     
@@ -299,8 +299,16 @@ public class Player
     }
     
     public int canGoTo(String direction) {
-    	int[][] m = this.getCurrentRoom().getMatrix();
-    	if(direction.equals("est")) {
+    	int[][] m = this.currentRoom.getMatrix();
+    	Coord c = getCaseCoords(direction);
+    	
+    	if(c != null) {
+    		return m[c.getY()][c.getX()];
+    	}
+    	else {
+    		return 0;
+    	}
+    	/*if(direction.equals("est")) {
     		if(getX() != m[0].length-1) {
     			return m[this.getY()][this.getX()+1];
     		}
@@ -320,6 +328,31 @@ public class Player
     			return m[this.getY()+1][this.getX()];
     		}
     	}
-    	return 0;
+    	return 0;*/
     }
+
+	public Coord getCaseCoords(String direction) {
+		int[][] m = this.currentRoom.getMatrix();
+    	if(direction.equals("est")) {
+    		if(getX() != m[0].length-1) {
+    			return new Coord(this.getX()+1, this.getY());
+    		}
+    	}
+    	else if(direction.equals("ouest")) {
+    		if(getX() != 0) {
+    			return new Coord(this.getX()-1, this.getY());
+    		}
+    	}
+    	else if(direction.equals("nord")) {
+    		if(getY() != 0) {
+    			return new Coord(this.getX(), this.getY()-1);
+    		}
+    	}
+    	else if(direction.equals("sud")) {
+    		if(getY() != m.length-1) {
+    			return new Coord(this.getX(), this.getY()+1);
+    		}
+    	}
+		return null;
+	}
 } //Player

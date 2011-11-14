@@ -48,7 +48,7 @@ public class GameModel extends Observable
         // declare the rooms
         Room ginetteRoom, couloir1, couloir2, couloir3, couloir4, infirmerie, salleCommune,
         refectoire, parc, hall, admine, accueil, bDD, cuisine, repos, reserve,
-        sSReserve, houssRoom, dehors, /*lol,*/ egouts;
+        sSReserve, houssRoom, dehors/*, lol, egouts*/;
 
         // create the rooms
         ginetteRoom = new Room("dans la chambre de mamy Ginette","room/ginetteRoom.jpg",Matrix.getGr());
@@ -71,13 +71,18 @@ public class GameModel extends Observable
         houssRoom = new Room("dans la chambre de papy Houss","room/houssRoom.jpg",Matrix.getHR());
         dehors = new Room("\u00e0 l'ext\u00e9rieur","room/dehors.jpg",Matrix.getS());
         //lol = new Room("dans la salle de t\u00e9l\u00e9portation","room/lol.jpg",Matrix.getS());
-        egouts = new TransporterRoom("dans les \u00e9gouts","room/egout.jpg",Matrix.getS());
+        //egouts = new TransporterRoom("dans les \u00e9gouts","room/egout.jpg",Matrix.getS());
 
         // initialise room exits
-        ginetteRoom.setExit("est",new Coord(5,2),couloir4,null,false);
-        ginetteRoom.setExit("ouest",new Coord(0,3),parc,new Coord(28,13),false);
+        ArrayList<Coord> a1 = new ArrayList<Coord>();
+        ArrayList<Coord> a2 = new ArrayList<Coord>();
+        //ginetteRoom.setExit("est",new Coord(5,2),couloir4,null,false);
+        a1.clear(); a2.clear();
+        a1.add(new Coord(0,3));
+        a2.add(new Coord(28,12));
+        ginetteRoom.setExit("ouest", new ArrayList<Coord>(a1), new Coord(0,3), parc, new ArrayList<Coord>(a2), new Coord(28,12), false);
 
-        couloir1.setExit("ouest",null,hall,new Coord(5,9),false);
+        /*couloir1.setExit("ouest",null,hall,new Coord(5,9),false);
         couloir1.setExit("nord",null,admine,new Coord(7,14),false);
         couloir1.setExit("sud",null,accueil,new Coord(6,1),false);
         couloir1.setExit("est",null,couloir2,null,false);
@@ -99,14 +104,24 @@ public class GameModel extends Observable
         infirmerie.setExit("sud",new Coord(7,10),couloir4,null,false);
 
         salleCommune.setExit("nord",new Coord(16,1),couloir3,null,false);
-        salleCommune.setExit("sud",new Coord(7,14),parc,new Coord(24,1),false);
+        */
+        a1.clear(); a2.clear();
+        a1.add(new Coord(7,14)); a1.add(new Coord(8,14));
+        a2.add(new Coord(24,1)); a2.add(new Coord(25,1));
+        salleCommune.setExit("sud", new ArrayList<Coord>(a1), new Coord(7,14), parc, new ArrayList<Coord>(a2), new Coord(24,1), false);
+        /*
         salleCommune.setExit("ouest",new Coord(0,7),refectoire,new Coord(16,7),false);
 
-        /*refectoire.setExit("est",new Coord(),salleCommune,new Coord(),false);
+        refectoire.setExit("est",new Coord(16,7),salleCommune,new Coord(0,7),false);
         refectoire.setExit("ouest",new Coord(),cuisine,new Coord(),false);
 
-        parc.setExit("nord",new Coord(),salleCommune,new Coord(),false);
-        //parc.setExit("est",new Coord(),ginetteRoom,new Coord(),false);
+        */
+        a1.clear(); a2.clear();
+        a1.add(new Coord(24,1)); a1.add(new Coord(25,1));
+        a2.add(new Coord(7,14)); a2.add(new Coord(8,14));
+        parc.setExit("nord", new ArrayList<Coord>(a1), new Coord(24,1), salleCommune, new ArrayList<Coord>(a2), new Coord(7,14), false);
+        /*
+        //parc.setExit("est",new Coord(28,12),ginetteRoom,new Coord(0,3),false);
 
         hall.setExit("ouest",new Coord(),dehors,new Coord(),true);
         hall.setExit("est",new Coord(),couloir1,null,false);
@@ -174,40 +189,40 @@ public class GameModel extends Observable
         Room.setAllRoom("hr",houssRoom);
         Room.setAllRoom("dehors",dehors);
         //Room.setAllRoom("nkpc",lol);
-        Room.setAllRoom("egouts",egouts);
+        //Room.setAllRoom("egouts",egouts);
 
         
         // declare the characters
         NPC houss;
-        LoopMovingCharacter claude;
-        AleaMovingCharacter nadia;
+        //LoopMovingCharacter claude;
+        //AleaMovingCharacter nadia;
 
         // create the characters
         houss = new NPC("Houss", "Papy Houss, expert en explosifs...", "Papy Houss : Bonjour Ginette, comment vas-tu ?");
-        claude = new LoopMovingCharacter("Claude", "Papy Claude, un gentil papy.", "Papy Claude : Bonjour Ginette, vous n'auriez pas vu la clouteuse \u00e0 eau ?");
-        nadia = new AleaMovingCharacter("Nadia", "Nadia, infirmi\u00e8re en chef.", "Nadia : Bonjour Mme Ginette, que faites-vous en dehors de votre chambre ?");
+        //claude = new LoopMovingCharacter("Claude", "Papy Claude, un gentil papy.", "Papy Claude : Bonjour Ginette, vous n'auriez pas vu la clouteuse \u00e0 eau ?");
+        //nadia = new AleaMovingCharacter("Nadia", "Nadia, infirmi\u00e8re en chef.", "Nadia : Bonjour Mme Ginette, que faites-vous en dehors de votre chambre ?");
 
         // initialise the current room for moving characters
-        claude.setCurrentRoom(salleCommune);
-        nadia.setCurrentRoom(infirmerie);
+        //claude.setCurrentRoom(salleCommune);
+        //nadia.setCurrentRoom(infirmerie);
 
         // initialise the loop for moving characters
-        claude.addDirection("nord");
+        /*claude.addDirection("nord");
         claude.addDirection("sud");
         claude.addDirection("ouest");
         claude.addDirection("est");
         claude.addDirection("sud");
-        claude.addDirection("nord");
+        claude.addDirection("nord");*/
 
         // add the characters to the rooms
         houssRoom.getCharacters().addCharacter("Houss", houss);
-        salleCommune.getCharacters().addCharacter("Claude", claude);
-        infirmerie.getCharacters().addCharacter("Nadia", nadia);
+        //salleCommune.getCharacters().addCharacter("Claude", claude);
+        //infirmerie.getCharacters().addCharacter("Nadia", nadia);
 
         // add the characters to the nPCList
         nPCList.add(houss);
-        nPCList.add(claude);
-        nPCList.add(nadia);
+        /*nPCList.add(claude);
+        nPCList.add(nadia);*/
 
         
         // declare the items
