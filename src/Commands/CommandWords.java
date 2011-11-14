@@ -44,8 +44,8 @@ public class CommandWords
         commands.put(CommandWord.TAKE, new TakeCommand());
         commands.put(CommandWord.DROP, new DropCommand());
         //commands.put(CommandWord.TO, new ToCommand());
-        commands.put(CommandWord.LOCK, new LockCommand());
-        commands.put(CommandWord.UNLOCK, new UnlockCommand());
+        //commands.put(CommandWord.LOCK, new LockCommand());
+        //commands.put(CommandWord.UNLOCK, new UnlockCommand());
         commands.put(CommandWord.USEITEM, new UseCommand());
         commands.put(CommandWord.INSPECT, new InspectCommand());
         commands.put(CommandWord.TEST, new TestCommand());
