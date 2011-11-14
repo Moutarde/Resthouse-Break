@@ -87,7 +87,7 @@ public class Item
     } //decreaseNb(.)
     
     /**
-     * 
+     * This method had to be rewritten
      */
     public void iAction(GameModel gameModel){}
     

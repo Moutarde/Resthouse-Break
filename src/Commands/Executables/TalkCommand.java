@@ -1,8 +1,8 @@
 package Commands.Executables;
 
-import Commands.*;
-import Games.*;
-import Characters.*;
+import Characters.NPC;
+import Commands.Command;
+import Games.GameEngine;
 
 
 /**

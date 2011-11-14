@@ -1,3 +1,5 @@
+import java.applet.Applet;
+
 import Interfaces.*;
 import Games.*;
 
@@ -10,10 +12,14 @@ import Games.*;
  * @version 1.0 (may 2009)
  */
 
-public class Game
+public class Game extends Applet
 {
+	private static final long serialVersionUID = -2625172347154287733L;
+	
 	private UserInterface gui;
 	private GameEngine engine;
+
+	public void init(){}
 
 	public static void main( String[] args )
 	{

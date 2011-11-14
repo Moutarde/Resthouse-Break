@@ -1,17 +1,30 @@
 package Interfaces;
 
-import Characters.Figure;
-import Games.*;
-import Sprites.Coord;
-import Sprites.Sprite;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+
+import Characters.Figure;
+import Games.GameEngine;
+import Games.Matrix;
+import Sprites.Coord;
+import Sprites.Sprite;
 
 /**
  * This class implements a simple graphical user interface with a text entry
@@ -194,7 +207,7 @@ public class UserInterface implements ActionListener
 		}).start();
 	}
 
-	
+
 	/**
 	 * Enable or disable input in the input field.
 	 */
@@ -237,14 +250,14 @@ public class UserInterface implements ActionListener
 			e.printStackTrace();
 		}
 		imgPan.setPreferredSize(new Dimension(1000, 527));
-		
+
 		characPan = new CharacPan();
 		characPan.setOpaque(false);
 		int xPos = (imgPan.getWidth()/2) - (imgPan.getBgImage().getWidth()/2);
 		int yPos = (imgPan.getHeight()/2) - (imgPan.getBgImage().getHeight()/2);
 		this.characPan.setPreferredSize(new Dimension(imgPan.getBgImage().getWidth(), imgPan.getBgImage().getHeight()));
 		this.characPan.setLocation(xPos, yPos);
-		
+
 		imgPan.add(characPan);
 
 		panel.setLayout(new BorderLayout());
@@ -263,6 +276,7 @@ public class UserInterface implements ActionListener
 		entryField.addActionListener(this);
 
 		myFrame.pack();
+		myFrame.setResizable(false);
 		myFrame.setVisible(true);
 		myFrame.requestFocus();
 	} //createGUI()
@@ -284,10 +298,15 @@ public class UserInterface implements ActionListener
 	private void processCommand()
 	{
 		String input = entryField.getText();
-		entryField.setText("");
+		clearText();
 
 		engine.interpretCommand(input);
 	} //processCommand()
+
+	public void clearText()
+	{
+		entryField.setText("");
+	}
 
 	public static GameEngine getGE()
 	{

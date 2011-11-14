@@ -1,7 +1,7 @@
 package Commands.Executables;
 
-import Commands.*;
-import Games.*;
+import Commands.Command;
+import Games.GameEngine;
 
 
 /**
@@ -13,7 +13,7 @@ import Games.*;
 public class SeeCommand extends Command
 {
     /**
-     * Constructor for objects of class GoCommand
+     * Constructor for objects of class SeeCommand
      */
     public SeeCommand()
     {

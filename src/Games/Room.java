@@ -4,23 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import Objets.*;
+import Characters.CharacterList;
+import Objets.ItemList;
 import Sprites.Coord;
-import Characters.*;
 
 /**
- * Class Room - a room in an adventure game.
- *
- * This class is part of the "World of Zuul" application. 
- * "World of Zuul" is a very simple, text based adventure game.  
- *
- * A "Room" represents one location in the scenery of the game.  It is 
- * connected to other rooms via exits.  The exits are labelled nord, 
- * est, sud, ouest.  For each direction, the room stores a reference
- * to the neighboring room, or null if there is no exit in that direction.
- * 
+ * This Class contains the instruction for Room
  * @author  Charlet Pierre, Kniebihler Nicolas, Provost Kevin
- * @version 1.0 (mai 2009)
+ * @version November 2011
  */
 public class Room 
 {
@@ -64,10 +55,7 @@ public class Room
         					 roomCoords, roomStartCoord,
         					 neighbor, neighborCoord, neighborStartCoord,
         					 locked);
-//         Door testDoor = new Door(neighbor,this,locked);
-//         if (!doors.containsValue(testDoor)) {
-            doors.put(direction, door);
-//         }
+        doors.put(direction, door);
         Door.getAllDoors().add(door);
     } //setExit(.)
     
@@ -120,13 +108,31 @@ public class Room
                                          + getItemString() + "\n"
                                          + getCharacterString() + "\n";
      } //getLongDescription()
+     
+     /**
+      * Return the room that is reached if we go from this
+      * room in direction "direction". If there is no room in
+      * that direction, return null.
+      * @return The room that corresponds with the direction given in parameter.
+      */
+     public Room getExit(String direction)
+     {
+         Door door = getDoor(direction);
+         
+         if (door != null)
+         {
+             for (Room room : door.getCorresRooms())
+             {
+                 if (room != this)
+                 {
+                     return room;
+                 } //if
+             } //foreach
+         } //if
+
+         return null;
+     } //getExit(.)
     
-    /**
-     * Return the room that is reached if we go from this
-     * room in direction "direction". If there is no room in
-     * that direction, return null.
-     * @return The room that corresponds with the direction given in parameter.
-     */
     public Room getExit(Coord caseCoord)
     {
     	Door door = null;
@@ -239,6 +245,15 @@ public class Room
 		for(Map.Entry<String, Door> e : doors.entrySet()) {
 			if(e.getValue().getCorresRooms().contains(room)) {
 				return e.getKey();
+			}
+		}
+		return null;
+	}
+
+	public Door getDoorToRoom(Room nextRoom) {
+		for(Door d : doors.values()) {
+			if(d.getNeighborRoom(this) == nextRoom) {
+				return d;
 			}
 		}
 		return null;

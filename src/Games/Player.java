@@ -8,7 +8,7 @@ import Objets.Key;
 import Sprites.Coord;
 
 /**
- * 
+ * This Class contains the instruction for player
  * 
  * @author Charlet Pierre, Kniebihler Nicolas, Provost Kevin
  * @version 1.0 (mai 2009)
@@ -148,9 +148,9 @@ public class Player
     /**
      * Replace the current room by the room in parameter.
      */
-    public void goRoom(Room nextRoom, String direction)
+    public void goRoom(Room nextRoom)
     {
-    	this.setPosition(currentRoom.getDoor(direction).getStartCoord(nextRoom));
+    	this.setPosition(currentRoom.getDoorToRoom(nextRoom).getStartCoord(nextRoom));
         currentRoom = nextRoom;
     } //goRoom(.)
     
@@ -273,7 +273,7 @@ public class Player
     } //controlTeethNb(.)
     
     /**
-     * 
+     * Check if a the player has the correspondant key
      */
     public boolean hasKey(Door door)
     {
@@ -308,27 +308,6 @@ public class Player
     	else {
     		return 0;
     	}
-    	/*if(direction.equals("est")) {
-    		if(getX() != m[0].length-1) {
-    			return m[this.getY()][this.getX()+1];
-    		}
-    	}
-    	if(direction.equals("ouest")) {
-    		if(getX() != 0) {
-    			return m[this.getY()][this.getX()-1];
-    		}
-    	}
-    	if(direction.equals("nord")) {
-    		if(getY() != 0) {
-    			return m[this.getY()-1][this.getX()];
-    		}
-    	}
-    	if(direction.equals("sud")) {
-    		if(getY() != m.length-1) {
-    			return m[this.getY()+1][this.getX()];
-    		}
-    	}
-    	return 0;*/
     }
 
 	public Coord getCaseCoords(String direction) {

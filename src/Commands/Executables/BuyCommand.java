@@ -1,10 +1,11 @@
 package Commands.Executables;
 
 import java.util.HashMap;
-import Commands.*;
-import Objets.*;
-import Games.*;
-import Characters.*;
+
+import Characters.NPC;
+import Commands.Command;
+import Games.GameEngine;
+import Objets.Item;
 
 
 /**
@@ -28,13 +29,6 @@ public class BuyCommand extends Command
      */
     public void execute(GameEngine engine)
     {
-        if(!hasSecondWord()) 
-        {
-            // if there is no second word, we don't know what to inspect...
-            engine.getTextView().show("\n" + "Tu veux que j'ach\u00eate quoi ?" + "\n");
-            return;
-        } //if
-        
         NPC lastTalk = engine.getGameModel().getPlayer().getLastTalk();
         
         if (lastTalk == null)
@@ -43,12 +37,28 @@ public class BuyCommand extends Command
             return;
         } //if
         
-        String item = getSecondWord();
-//         HashMap<String, Item> hm = engine.getGameModel().getPlayer().getCurrentRoom().getCharacters().get(lastTalk).getBag();
         HashMap<String, Item> hm = lastTalk.getBag();
         
+        if(!hasSecondWord()) 
+        {
+            // if there is no second word, print the content of the lastTalk bag.
+            StringBuilder sb = new StringBuilder();
+            sb.append("Objets vendus par " + lastTalk.getNPCName() + " : " + "\n");
+            
+            for( String item : hm.keySet())
+            {
+                sb.append(hm.get(item).getItemName() + " : "
+                          + hm.get(item).getItemDescription()+"\n"
+                          + "    prix : " + hm.get(item).getItemCost() + "\n"
+                          + "    poids : " + hm.get(item).getItemWeight() + "\n" );
+            }
+            
+            engine.getTextView().show("\n" + sb + "\n");
+            return;
+        } //if
         
-        
+        String item = getSecondWord();
+                
         if (!hm.containsKey(item)) 
         {
             engine.getTextView().show("\n" + "Il ne vend pas \u00e7a !" + "\n");

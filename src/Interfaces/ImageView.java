@@ -1,10 +1,10 @@
 package Interfaces;
 
-import Games.*;
-
 import java.util.Observable;
 import java.util.Observer;
 import java.util.StringTokenizer;
+
+import Games.GameModel;
 
 /**
  * ImageView is a graphic view of the Zuul game. It shows images on the 
@@ -15,16 +15,12 @@ import java.util.StringTokenizer;
  */
 public class ImageView implements Observer
 {
-    //private GameModel gameModel;
     private UserInterface gui;
     
     /**
      * Constructor for objects of class ImageView.
      */
-    public ImageView(GameModel gameModel)
-    {
-        //this.gameModel = gameModel;
-    } //TextView(.)
+    public ImageView(GameModel gameModel){}
     
     /**
      * Initialises the user interface, and shows the start room.

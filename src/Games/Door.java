@@ -8,7 +8,7 @@ import Sprites.Coord;
  * D�crivez votre classe Doors ici.
  * 
  * @author  Charlet Pierre, Kniebihler Nicolas, Provost Kevin
- * @version 1.0 (avril 2009)
+ * @version November 2011
  */
 public class Door
 {

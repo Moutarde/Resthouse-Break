@@ -23,7 +23,7 @@ public class VitamineC extends Item
      */
     @Override public void iAction(GameModel gameModel)
     {
-        gameModel.getPlayer().increaseStepNb(3);
+        gameModel.getPlayer().increaseStepNb(50);
     } //iAction()
     
     /**

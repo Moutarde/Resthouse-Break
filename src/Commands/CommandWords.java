@@ -1,17 +1,14 @@
 package Commands;
 
 import Commands.Executables.*;
+
 import java.util.HashMap;
 
 /**
- * This class is part of the "World of Zuul" application. 
- * "World of Zuul" is a very simple, text based adventure game.  
+ * This Class contains the instruction for CommandWords
  * 
- * This class holds an enumeration of all command words known to the game.
- * It is used to recognise commands as they are typed in.
- *
- * @author  Charlet Pierre, Kniebihler Nicolas, Provost Kevin
- * @version 1.0 (mai 2009)
+ * @author Pierre Charlet, Nicolas Kniebihler, Kevin Provost
+ * @version November 2011
  */
 
 public class CommandWords
@@ -53,6 +50,8 @@ public class CommandWords
         //commands.put(CommandWord.BACK, new BackCommand());
         commands.put(CommandWord.TALK, new TalkCommand());
         commands.put(CommandWord.BUY, new BuyCommand());
+        commands.put(CommandWord.ALEA, new AleaCommand());
+        commands.put(CommandWord.FREEZE, new FreezeCommand());
     }
 
     /**
@@ -97,73 +96,4 @@ public class CommandWords
         else
             return vRet;
     }
-    
-// public class CommandWords
-// {
-// a constant array that holds all valid command words
-//     private HashMap<String, CommandWord> validCommands;
-// 
-//     /**
-//      * Constructor - initialise the command words.
-//      */
-//     public CommandWords()
-//     {
-//         validCommands = new HashMap<String, CommandWord>();
-//         for(CommandWord command : CommandWord.values()) 
-//         {
-//             if(command != CommandWord.UNKNOWN) 
-//             {
-//                 validCommands.put(command.toString(), command);
-//             }
-//         }
-// 
-//     } //CommandWords()
-// 
-//     /**
-//      * get the validcommand
-//      */
-//     public CommandWord getVal( String pKey )
-//     {
-//         CommandWord vRet = validCommands.get( pKey );
-//         
-//         if( vRet == null )
-//         {
-//             return CommandWord.UNKNOWN;
-//         }
-//         else
-//             return vRet;
-//     }
-//     
-//     /**
-//     * Return all valid commands.
-//     * @return a string of all valid commands.
-//     */
-//     public String getCommandList()
-//     {
-//         StringBuilder commandList = new StringBuilder();
-//         
-//         for(String command : validCommands.keySet()) 
-//         {
-//             commandList.append( command + " " );
-//         } //for
-//         
-//         return commandList.toString();
-//     } //getCommandList()
-//     
-//     
-//     /**
-//      * Check whether a given String is a valid command word. 
-//      * @return true if a given string is a valid command,
-//      * false if it isn't.
-//      */
-//     public boolean isCommand(String aString)
-//     {
-//         for(String command : validCommands.keySet())
-//         {
-//             if(command.equals(aString))
-//                 return true;
-//         } //for
-// if we get here, the string was not found in the commands
-//         return false;
-//     } //isCommand(.)
 } //CommandWords

@@ -68,5 +68,18 @@ public class NPC
         return false;
     } //canMove()
     
+    /**
+     * 
+     *
+     * @return isNadia
+     */
+    public boolean isNadia()
+    {
+        return false;
+    }
     
+    /**
+     * This method had to be redefined
+     */
+    public void freeze(){}
 } //Character

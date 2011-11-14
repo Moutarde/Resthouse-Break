@@ -1,10 +1,11 @@
 package Commands.Executables;
 
-import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
-import Games.*;
-import Commands.*;
+import java.util.Scanner;
+
+import Commands.Command;
+import Games.GameEngine;
 
 
 /**
@@ -16,7 +17,7 @@ import Commands.*;
 public class TestCommand extends Command
 {
     /**
-     * Constructor for objects of class GoCommand
+     * Constructor for objects of class TestCommand
      */
     public TestCommand()
     {

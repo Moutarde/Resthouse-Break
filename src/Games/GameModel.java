@@ -1,13 +1,22 @@
 package Games;
 
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Stack;
-import java.util.ArrayList;
-import Objets.*;
+
+import Characters.AleaMovingCharacter;
+import Characters.Figure;
+import Characters.LoopMovingCharacter;
+import Characters.NPC;
+import Characters.Nadia;
+import Objets.Beamer;
+import Objets.Item;
+import Objets.Key;
+import Objets.Pacemaker;
+import Objets.VitamineC;
 import Sprites.Coord;
 import Sprites.Sprite;
 import Sprites.SpriteSheet;
-import Characters.*;
 
 /**
  * GameModel represents the model of the game. This 
@@ -22,7 +31,8 @@ public class GameModel extends Observable
     private ArrayList<NPC> nPCList;
     private SpriteSheet spriteSheet;
 
-    private static String[] exitStrings = {"nord", "sud", "est", "ouest"};
+    private static String[] exitStrings = {"nord", "sud", "est", "ouest", "haut", "bas"};
+    private static String aleaS="";
 
     /**
      * Constructor for objects of the class GameModel.
@@ -48,7 +58,7 @@ public class GameModel extends Observable
         // declare the rooms
         Room ginetteRoom, couloir1, couloir2, couloir3, couloir4, infirmerie, salleCommune,
         refectoire, parc, hall, admine, accueil, bDD, cuisine, repos, reserve,
-        sSReserve, houssRoom, dehors/*, lol, egouts*/;
+        sSReserve, houssRoom, dehors/*, lol*/, egouts;
 
         // create the rooms
         ginetteRoom = new Room("dans la chambre de mamy Ginette","room/ginetteRoom.jpg",Matrix.getGr());
@@ -71,7 +81,7 @@ public class GameModel extends Observable
         houssRoom = new Room("dans la chambre de papy Houss","room/houssRoom.jpg",Matrix.getHR());
         dehors = new Room("\u00e0 l'ext\u00e9rieur","room/dehors.jpg",Matrix.getS());
         //lol = new Room("dans la salle de t\u00e9l\u00e9portation","room/lol.jpg",Matrix.getS());
-        //egouts = new TransporterRoom("dans les \u00e9gouts","room/egout.jpg",Matrix.getS());
+        egouts = new TransporterRoom("dans les \u00e9gouts","room/egout.jpg",Matrix.getS());
 
         // initialise room exits
         ArrayList<Coord> a1 = new ArrayList<Coord>();
@@ -189,47 +199,82 @@ public class GameModel extends Observable
         Room.setAllRoom("hr",houssRoom);
         Room.setAllRoom("dehors",dehors);
         //Room.setAllRoom("nkpc",lol);
-        //Room.setAllRoom("egouts",egouts);
+        Room.setAllRoom("egouts",egouts);
 
         
         // declare the characters
-        NPC houss;
-        //LoopMovingCharacter claude;
-        //AleaMovingCharacter nadia;
+        NPC houss, deub, daniel, quila, gaiver, stivi, mh, rosita, valerie, josiane, nirep;
+        LoopMovingCharacter claude;
+        AleaMovingCharacter bob;
+        Nadia nadia;
 
         // create the characters
-        houss = new NPC("Houss", "Papy Houss, expert en explosifs...", "Papy Houss : Bonjour Ginette, comment vas-tu ?");
-        //claude = new LoopMovingCharacter("Claude", "Papy Claude, un gentil papy.", "Papy Claude : Bonjour Ginette, vous n'auriez pas vu la clouteuse \u00e0 eau ?");
-        //nadia = new AleaMovingCharacter("Nadia", "Nadia, infirmi\u00e8re en chef.", "Nadia : Bonjour Mme Ginette, que faites-vous en dehors de votre chambre ?");
+        houss = new NPC("Houss", "Papy Houss, un papy explosif...", "Papy Houss : Bonjour Ginette, comment allez-vous ?");
+        deub = new NPC("Deubeuliou", "Papy Deubeuliou, expert en armement.", "Papy Deubeuliou : Bonjour Ginette, beau temps n'est-ce pas ?");
+        daniel = new NPC("Daniel", "Jacques Daniel, un papy qui a soif...", "Papy Houss : Bonjour Ginette, \u00e7a vous dirait de prendre un verre ?");
+        quila = new NPC("Quila", "Quila, un infirmier corrompu.", "Quila : Bonjour madame, besoin de quelque chose ?");
+        gaiver = new NPC("Gaiver", "Papy Gaiver, un papy qui sait tout faire.", "Papy Gaiver : Bonjour Ginette, la famille, \u00e7a va ?");
+        stivi = new NPC("Stivi", "Papy Stivi, un ami bien utile.", "Papy Stivi : Alors Ginette, o\u00f9 en est ton plan d'\u00e9vasion ?");
+        mh = new NPC("MarieHelene", "Mamy Marie-H\u00e9l\u00e8ne, une gentille mamy", "Mamy Marie-H\u00e9l\u00e8ne : Bonjour Ginette, avez-vous trouv\u00e9 la fourche ?");
+        rosita = new NPC("Rosita", "Mamy Rosita, une gentille mamy (tr\u00e9s gentille...)", "Mamy Rosita : Hola Ginette, commo estas ?");
+        valerie = new NPC("Valerie", "Mamy Val\u00e9rie, une mamy sympa", "Mamy Val\u00e9rie : H\u00e9 Ginette, cette nuit j'ai r\u00eav\u00e9 d'un pot de moutarde g\u00e9ant !");
+        josiane = new NPC("Josiane", "Mamy Josiane, une joyeuse mamy.", "Mamy Josiane : Salut Ginette, vous voulez jouer au scrabble ?");
+        nirep = new NPC("Nirep", "M. Nirep, directeur de la Rivi\u00e8re du Renard.", "Un problème madame ?");
+        claude = new LoopMovingCharacter("Claude", "Papy Claude, un gentil papy.", "Papy Claude : Bonjour Ginette, vous n'auriez pas vu la clouteuse \u00e0 eau ?");
+        nadia = new Nadia("Nadia", "Nadia, infirmi\u00e8re en chef.", "Nadia : Bonjour Mme Ginette, que faites-vous en dehors de votre chambre ?", false);
+        bob = new AleaMovingCharacter("Bob", "Bob, un infirmier comme les autres.", "Bob : ...");
 
         // initialise the current room for moving characters
-        //claude.setCurrentRoom(salleCommune);
-        //nadia.setCurrentRoom(infirmerie);
+        claude.setCurrentRoom(salleCommune);
+        nadia.setCurrentRoom(infirmerie);
+        bob.setCurrentRoom(parc);
 
         // initialise the loop for moving characters
-        /*claude.addDirection("nord");
+        claude.addDirection("nord");
         claude.addDirection("sud");
         claude.addDirection("ouest");
         claude.addDirection("est");
         claude.addDirection("sud");
-        claude.addDirection("nord");*/
+        claude.addDirection("nord");
 
         // add the characters to the rooms
         houssRoom.getCharacters().addCharacter("Houss", houss);
-        //salleCommune.getCharacters().addCharacter("Claude", claude);
-        //infirmerie.getCharacters().addCharacter("Nadia", nadia);
+        salleCommune.getCharacters().addCharacter("Claude", claude);
+        salleCommune.getCharacters().addCharacter("Deubeuliou", deub);
+        salleCommune.getCharacters().addCharacter("Gaiver", gaiver);
+        salleCommune.getCharacters().addCharacter("Stivi", stivi);
+        salleCommune.getCharacters().addCharacter("Rosita", rosita);
+        salleCommune.getCharacters().addCharacter("Valerie", valerie);
+        refectoire.getCharacters().addCharacter("MarieHelene", mh);
+        refectoire.getCharacters().addCharacter("Daniel", daniel);
+        refectoire.getCharacters().addCharacter("Josiane", josiane);
+        reserve.getCharacters().addCharacter("Quila", quila);
+        repos.getCharacters().addCharacter("Bob", bob);
+        bDD.getCharacters().addCharacter("Nirep", nirep);
+        infirmerie.getCharacters().addCharacter("Nadia", nadia);
 
         // add the characters to the nPCList
         nPCList.add(houss);
-        /*nPCList.add(claude);
-        nPCList.add(nadia);*/
+        nPCList.add(claude);
+        nPCList.add(deub);
+        nPCList.add(gaiver);
+        nPCList.add(stivi);
+        nPCList.add(rosita);
+        nPCList.add(valerie);
+        nPCList.add(mh);
+        nPCList.add(daniel);
+        nPCList.add(josiane);
+        nPCList.add(quila);
+        nPCList.add(bob);
+        nPCList.add(nirep);
+        nPCList.add(nadia);
 
         
         // declare the items
         Item verre, fourchette, domino, balle, seringue, canne, /*fourche,*/ masse;
-        Pacemaker toctoc;
-        VitamineC psss;
-        //Beamer pouet;
+        Pacemaker toctoc, tictic;
+        VitamineC psss, psss2;
+        Beamer pouet;
 
         Key reserveKey, bDDKey, exitKey;
 
@@ -243,21 +288,26 @@ public class GameModel extends Observable
         //fourche = new Item("FOURCHE","parce que c'est bien utile d'en avoir une",999999999,99999999,1000);
         masse = new Item("masse","truc lourd",0,99,1);
         toctoc = new Pacemaker("pacemaker","objet pouvant augmenter la vitesse du coeur :" + "\n"
-            + "augmente le poids maximum pouvant \u00eatre port\u00e9", 25,7,1);
+        		+ "augmente le poids maximum pouvant \u00eatre port\u00e9", 25,7,1);
+        tictic = new Pacemaker("pacemaker","objet pouvant augmenter la vitesse du coeur :" + "\n"
+                + "augmente le poids maximum pouvant \u00eatre port\u00e9", 25,7,1);
         psss = new VitamineC("VitamineC","objet redonnant des forces :" + "\n"
-            + "augmente le nombre de pas restant", 10,2,1);
-        //pouet = new Beamer("teleporteur","permet de se t\u00e9l\u00e9porter dans une piece precedemment visit\u00e9\u00e9 : " + "\n"
-        //    +"chargez le dans une piece ( utiliser) et r\u00e9utiliser le dans une autre pi\u00e8ce",10,5,1);
+        		+ "augmente le nombre de pas restant", 10,2,1);
+        psss2 = new VitamineC("VitamineC","objet redonnant des forces :" + "\n"
+                + "augmente le nombre de pas restant", 10,2,1);
+        pouet = new Beamer("teleporteur","permet de se t\u00e9l\u00e9porter dans une piece precedemment visit\u00e9\u00e9 : " + "\n"
+        		+"chargez le dans une piece ( utiliser) et r\u00e9utiliser le dans une autre pi\u00e8ce",10,5,1);
         reserveKey = new Key("clefReserve","la cl\u00e9 de la r\u00e9serve", 0,4,1, reserve.getDoor("sud"));
-        bDDKey = new Key("clefDirecteur","la cl\u00e9 du bureau du directeur", 0,4,1, bDD.getDoor("ouest"));
+        bDDKey = new Key("clefDirecteur","la cl\u00e9 du bureau du directeur", 10,4,1, bDD.getDoor("ouest"));
         exitKey = new Key("clefSortie","la cl\u00e9 de la porte de sortie de la maison de retraite", 0,4,1, hall.getDoor("ouest"));
 
         // add the items to the rooms
         ginetteRoom.getItems().addItem("verre", verre);
-        //ginetteRoom.getItems().addItem("teleporteur", pouet);
+        ginetteRoom.getItems().addItem("teleporteur", pouet);
         couloir4.getItems().addItem("canne", canne);
         infirmerie.getItems().addItem("seringue", seringue);
         infirmerie.getItems().addItem("VitamineC", psss);
+        cuisine.getItems().addItem("VitamineC", psss2);
         salleCommune.getItems().addItem("domino", domino);
         refectoire.getItems().addItem("fourchette", fourchette);
         refectoire.getItems().addItem("verre", verre);
@@ -267,12 +317,12 @@ public class GameModel extends Observable
         cuisine.getItems().addItem("pacemaker", toctoc);
 
         accueil.getItems().addItem("clefReserve", reserveKey);
-        reserve.getItems().addItem("clefDirecteur", bDDKey);
         bDD.getItems().addItem("clefSortie", exitKey);
 
         // add the items to the characters bags
         houss.getBag().addItem("balle", balle);
-
+        quila.getBag().addItem("clefDirecteur", bDDKey);
+        rosita.getBag().addItem("pacemaker", tictic);
         
         // create a stack with the rooms where the player goes, to go back.
         backRoom = new Stack<Room>();
@@ -309,15 +359,32 @@ public class GameModel extends Observable
     {
         return exitStrings;
     }
+    
+    /**
+     * 
+     * @return aleaS
+     */
+    public static String getAleaS()
+    {
+        return aleaS;
+    } //getAleas(.)
+    
+    /**
+     * Replace aleaS
+     */
+    public static void setAleaS(String s)
+    {
+        aleaS=s;
+    } //setAleaS(.)
 
     /**
      * Replace the current room by the room in parameter,
      * and notify the change to the observers.
      */
-    public void goRoom(Room nextRoom, String direction)
+    public void goRoom(Room nextRoom)
     {
         backRoom.push(player.getCurrentRoom());
-        player.goRoom(nextRoom, direction);
+        player.goRoom(nextRoom);
         player.decreaseStepNb(1);
         setChanged();
         notifyObservers();
@@ -337,14 +404,14 @@ public class GameModel extends Observable
      * Replace the current room by the last room
      * and notify the change to the observers.
      */
-    /*public void goBack()
+    public void goBack()
     {
         Room last = backRoom.pop();
         player.goRoom(last);
         player.increaseStepNb(1);
         setChanged();
         notifyObservers();
-    } //goBack()*/
+    } //goBack()
 
     /**
      * @return The message that informs the player that he has taken the item.
@@ -388,8 +455,8 @@ public class GameModel extends Observable
     public String getWelcomeString() 
     {
         return "\n" + "Bienvenue \u00e0 la rivi\u00e8re du renard," + "\n" +
-        "une maison de retraite calme et paisible." + "\n" +
-        "Tapez '15' si vous avez besoin d'aide." + "\n";
+        		"une maison de retraite calme et paisible." + "\n" +
+        		"Tapez '15' si vous avez besoin d'aide." + "\n";
     } //getWelcomeString()
 
     /**
@@ -401,6 +468,23 @@ public class GameModel extends Observable
         return "\n"+"Vous ne regarderez plus vos grand-parents de la m\u00eame fa\u00e7on...";
     } //getGoodByeString()
 
+    /**
+     * Return the ending message for the player.
+     * @return "\n" + "GAME OVER" + "\n" + "Vous \u00eates morte..." + "\n" + "Vous n'avez pas r\u00e9ussi \u00e0 vous \u00e9chapper de la maison de retraite."
+     */
+    public String getGameOverString()
+    {
+        return "\n" +"GGGGGGG   AAAAAAA   MM             MM   EEEEEEE          OOOOOOO   VV         VV   EEEEEEE   RRRRRRR"+"\n"
+                    +"GGGGGGG   AAAAAAA   MMM        MMM   EEEEEEE          OOOOOOO   VV         VV   EEEEEEE   RRRRRRR"+"\n"
+                    +"GG              AA      AA   MMMM   MMMM   EE                   OO       OO     VV     VV     EE            RR      RR"+"\n"
+                    +"GG              AAAAAAA   MM  MMMM MM   EEEEEE            OO       OO     VV     VV     EEEEEE     RRRRRRR"+"\n"
+                    +"GG       GG   AAAAAAA   MM    MM    MM   EE                   OO       OO       VVVV        EE            RR  RR"+"\n"
+                    +"GGGGGGG   AA      AA   MM             MM   EEEEEEE          OOOOOOO        VVVV        EEEEEEE   RR    RR"+"\n"
+                    +"GGGGGGG   AA      AA   MM             MM   EEEEEEE          OOOOOOO          VV          EEEEEEE   RR       RR"+"\n"
+                    +"GAME OVER" + "\n" + "Vous \u00eates morte..." + "\n" + "Vous n'avez pas r\u00e9ussi \u00e0 vous \u00e9chapper de la maison de retraite."+"\n";
+
+    }
+    
     /**
      * Return the help message for the player.
      * @return "Un beau pompier arrive et vous dit : "
@@ -416,15 +500,15 @@ public class GameModel extends Observable
     public String getToHelpString()
     {
         return "\n"+"ginette room : gr                   infirmerie : inf"
-        +"\n"+"salle commune : sc             refectoire : ref"
-        +"\n"+"parc : parc                              hall : hall"
-        +"\n"+"couloir1 : c1                           couloir2 : c2"
-        +"\n"+"couloir3 : c3                           couloir4 : c4"
-        +"\n"+"administration : admine      cuisine : cuisine"
-        +"\n"+"accueil : accueil                    salleRepos : repos"
-        +"\n"+"bureau directeur : bdd         reserve : reserve"
-        +"\n"+"sous sol reserve : ssr          houss room :hr"
-        +"\n"+"dehors : dehors";
+        		+"\n"+"salle commune : sc             refectoire : ref"
+        		+"\n"+"parc : parc                              hall : hall"
+        		+"\n"+"couloir1 : c1                           couloir2 : c2"
+        		+"\n"+"couloir3 : c3                           couloir4 : c4"
+        		+"\n"+"administration : admine      cuisine : cuisine"
+        		+"\n"+"accueil : accueil                    salleRepos : repos"
+        		+"\n"+"bureau directeur : bdd         reserve : reserve"
+        		+"\n"+"sous sol reserve : ssr          houss room :hr"
+        		+"\n"+"dehors : dehors";
     } //getToHelpString()
 
     /**

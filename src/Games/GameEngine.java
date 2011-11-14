@@ -1,19 +1,17 @@
 package Games;
 
-import Commands.*;
-import Interfaces.*;
-
+import Commands.Command;
+import Commands.Parser;
+import Interfaces.ImageView;
+import Interfaces.TextView;
+import Interfaces.UserInterface;
 
 /**
- *  This class is part of the "World of Zuul" application. 
- *  "World of Zuul" is a very simple, text based adventure game.
- * 
- *  This class creates all rooms, creates the parser and starts
- *  the game.  It also evaluates and executes the commands that 
- *  the parser returns.
+ *  Class GameEngine
+ * This Class initialises the game
  * 
  * @author  Charlet Pierre, Kniebihler Nicolas, Provost Kevin
- * @version 1.0 (mai 2009)
+ * @version November 2011
  */
 
 public class GameEngine
@@ -114,5 +112,13 @@ public class GameEngine
         textView.printGoodBye();
         gui.enable(false);
     } //endGame
-
+    
+    /**
+     * Print out a  game over message, and end the game.
+     */
+    public void gameOver()
+    {
+        textView.printGameOver();
+        gui.enable(false);
+    }
 } //GameEngine

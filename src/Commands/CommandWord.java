@@ -13,7 +13,7 @@ public enum CommandWord
     // corresponding user interface string.
     GO("go"), QUIT("quitter"), HELP("15"), SEE("voir"), EAT("manger"), INSPECT("inspecter"), BACK("back"),
     TO("to"), TEST("test"), TAKE("prendre"), DROP("jeter"), INSPECTBAG("inspecterSac"), UNKNOWN("?"), USEITEM("utiliser"),
-    UNLOCK("deverrouiller"), LOCK("verrouiller"), TALK("parler"), BUY("acheter");
+    UNLOCK("deverrouiller"), LOCK("verrouiller"), TALK("parler"), BUY("acheter"), ALEA("alea"), FREEZE("freeze");
 
     // The command string.
     private String commandString;

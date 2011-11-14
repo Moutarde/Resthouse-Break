@@ -1,9 +1,10 @@
 package Commands.Executables;
 
 import java.util.HashMap;
-import Objets.*;
-import Games.*;
-import Commands.*;
+
+import Commands.Command;
+import Games.GameEngine;
+import Objets.Item;
 
 
 /**
