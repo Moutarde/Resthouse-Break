@@ -4,6 +4,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.StringTokenizer;
 
+import Characters.Figure;
 import Games.GameModel;
 
 /**
@@ -38,6 +39,9 @@ public class ImageView implements Observer
     {
     	if(arg == null) {
     		gui.showImageAndCharacter();
+    	}
+    	else if(arg instanceof Figure) {
+    		gui.showCharacter((Figure)arg);
     	}
     	else if(arg instanceof String) {
     		String word1;

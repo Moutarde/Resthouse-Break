@@ -22,9 +22,6 @@ import javax.swing.SwingUtilities;
 
 import Characters.Figure;
 import Games.GameEngine;
-import Games.Matrix;
-import Sprites.Coord;
-import Sprites.Sprite;
 
 /**
  * This class implements a simple graphical user interface with a text entry
@@ -41,7 +38,7 @@ public class UserInterface implements ActionListener
 	private JTextField entryField;
 	private JTextArea log;
 	private ImgPan imgPan;
-	private CharacPan characPan;
+	private CharacLabel characPan;
 
 	/**
 	 * Construct a UserInterface. As a parameter, a Game Engine
@@ -91,13 +88,20 @@ public class UserInterface implements ActionListener
 						final BufferedImage bg = ImageIO.read(imageURL);
 						SwingUtilities.invokeLater(new Runnable() {
 							public void run() {
-								characPan.clearFigures();
+								//characPan.clearFigures();
 								imgPan.setBgImage(bg);
 								int xPos = (imgPan.getWidth()/2) - (imgPan.getBgImage().getWidth()/2);
 								int yPos = (imgPan.getHeight()/2) - (imgPan.getBgImage().getHeight()/2);
-								characPan.setLocation(xPos, yPos);
-								characPan.setSize(new Dimension(imgPan.getBgImage().getWidth(), imgPan.getBgImage().getHeight()));
-								characPan.addFigure(engine.getGameModel().getPlayer().getFigure().clone());
+								//characPan.setLocation(xPos, yPos);
+								//characPan.setSize(new Dimension(imgPan.getBgImage().getWidth(), imgPan.getBgImage().getHeight()));
+								//characPan.addFigure(engine.getGameModel().getPlayer().getFigure().clone());
+								characPan.setImgPanPos(xPos, yPos);
+								characPan.setLabel();
+								//characPan.setLabel(xPos, yPos, engine.getGameModel().getPlayer().getFigure().clone());
+								//characPan.setIcon(new ImageIcon(engine.getGameModel().getPlayer().getFigure().clone().getSprite().getObject(engine.getGameModel().getPlayer().getFigure().clone().getPosture())));
+								//characPan.setLocation(xPos + engine.getGameModel().getPlayer().getFigure().clone().getCoord().getX(), yPos + engine.getGameModel().getPlayer().getFigure().clone().getCoord().getY());
+								System.out.println("Repaint at : "+characPan.getLocation());
+								characPan.repaint();
 							}
 						});
 					}
@@ -111,8 +115,35 @@ public class UserInterface implements ActionListener
 		myFrame.pack();
 	}
 
+	public void showCharacter(Figure f) {
+		//final Figure f = figure.clone();
+		
+		/*new Thread(new Runnable() {
+			public void run() {
+				SwingUtilities.invokeLater(new Runnable() {
+					public void run() {*/
+						//characPan.clearFigures();
+						//characPan.setLocation(xPos, yPos);
+						//characPan.setSize(new Dimension(imgPan.getBgImage().getWidth(), imgPan.getBgImage().getHeight()));
+						//characPan.addFigure(engine.getGameModel().getPlayer().getFigure().clone());
+						characPan.setFigure(f);
+						characPan.setLabel();
+						//characPan.setLabel(xPos, yPos, engine.getGameModel().getPlayer().getFigure().clone());
+						//characPan.setIcon(new ImageIcon(engine.getGameModel().getPlayer().getFigure().clone().getSprite().getObject(engine.getGameModel().getPlayer().getFigure().clone().getPosture())));
+						//characPan.setLocation(xPos + engine.getGameModel().getPlayer().getFigure().clone().getCoord().getX(), yPos + engine.getGameModel().getPlayer().getFigure().clone().getCoord().getY());
+						System.out.println("Repaint at : "+characPan.getLocation());
+						characPan.repaint();
+					/*}
+				});
+			}
+		}).start();
+
+		myFrame.pack();*/
+	}
+
 	public void animateCharacter(String direction) {
-		Figure f = engine.getGameModel().getPlayer().getFigure();
+		
+		/*Figure f = engine.getGameModel().getPlayer().getFigure();
 
 		int x = engine.getGameModel().getPlayer().getX();
 		int y = engine.getGameModel().getPlayer().getY();
@@ -197,14 +228,22 @@ public class UserInterface implements ActionListener
 			public void run() {
 				SwingUtilities.invokeLater(new Runnable() {
 					public void run() {
-						characPan.addFigure(f1);
+						/*characPan.addFigure(f1);
 						characPan.addFigure(f2);
 						characPan.addFigure(f3);
 						characPan.addFigure(f4);
+						characPan.setFigure(f1);
+						characPan.setLabel();
+						characPan.setFigure(f2);
+						characPan.setLabel();
+						characPan.setFigure(f3);
+						characPan.setLabel();
+						characPan.setFigure(f4);
+						characPan.setLabel();
 					}
 				});
 			}
-		}).start();
+		}).start();*/
 	}
 
 
@@ -251,12 +290,12 @@ public class UserInterface implements ActionListener
 		}
 		imgPan.setPreferredSize(new Dimension(1000, 527));
 
-		characPan = new CharacPan();
-		characPan.setOpaque(false);
 		int xPos = (imgPan.getWidth()/2) - (imgPan.getBgImage().getWidth()/2);
 		int yPos = (imgPan.getHeight()/2) - (imgPan.getBgImage().getHeight()/2);
+		characPan = new CharacLabel(xPos, yPos, engine.getGameModel().getPlayer().getFigure());
+		/*characPan.setOpaque(false);
 		this.characPan.setPreferredSize(new Dimension(imgPan.getBgImage().getWidth(), imgPan.getBgImage().getHeight()));
-		this.characPan.setLocation(xPos, yPos);
+		this.characPan.setLocation(xPos, yPos);*/
 
 		imgPan.add(characPan);
 
@@ -311,5 +350,9 @@ public class UserInterface implements ActionListener
 	public static GameEngine getGE()
 	{
 		return engine;
+	}
+	
+	public CharacLabel getCharacLabel() {
+		return characPan;
 	}
 } //UserInterface

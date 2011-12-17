@@ -396,8 +396,90 @@ public class GameModel extends Observable
     }
 
     private void moveAnimation(String direction) {
+    	Figure f = player.getFigure();
+    	
+    	int x = player.getX();
+		int y = player.getY();
+
+		if(direction.equals("est")) {
+			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3 + Matrix.CASE_SIZE/4, y * Matrix.CASE_SIZE - 5));
+			f.setPosture(Sprite.goRight1);
+		}
+		else if(direction.equals("ouest")) {
+			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3 - Matrix.CASE_SIZE/4, y * Matrix.CASE_SIZE - 5));
+			f.setPosture(Sprite.goLeft1);
+		}
+		else if(direction.equals("nord")) {
+			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3, y * Matrix.CASE_SIZE - 5 - Matrix.CASE_SIZE/4));
+			f.setPosture(Sprite.goUp1);
+		}
+		else if(direction.equals("sud")) {
+			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3, y * Matrix.CASE_SIZE - 5 + Matrix.CASE_SIZE/4));
+			f.setPosture(Sprite.goDown1);
+		}
+		
     	setChanged();
-    	notifyObservers("move " + direction);
+    	notifyObservers(f.clone());
+
+		if(direction.equals("est")) {
+			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3 + Matrix.CASE_SIZE/2, y * Matrix.CASE_SIZE - 5));
+			f.setPosture(Sprite.showRight);
+		}
+		else if(direction.equals("ouest")) {
+			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3 - Matrix.CASE_SIZE/2, y * Matrix.CASE_SIZE - 5));
+			f.setPosture(Sprite.showLeft);
+		}
+		else if(direction.equals("nord")) {
+			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3, y * Matrix.CASE_SIZE - 5 - Matrix.CASE_SIZE/2));
+			f.setPosture(Sprite.showUp);
+		}
+		else if(direction.equals("sud")) {
+			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3, y * Matrix.CASE_SIZE - 5 + Matrix.CASE_SIZE/2));
+			f.setPosture(Sprite.showDown);
+		}
+		
+    	setChanged();
+    	notifyObservers(f.clone());
+
+		if(direction.equals("est")) {
+			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3 + 3 * Matrix.CASE_SIZE/4, y * Matrix.CASE_SIZE - 5));
+			f.setPosture(Sprite.goRight2);
+		}
+		else if(direction.equals("ouest")) {
+			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3 - 3 * Matrix.CASE_SIZE/4, y * Matrix.CASE_SIZE - 5));
+			f.setPosture(Sprite.goLeft2);
+		}
+		else if(direction.equals("nord")) {
+			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3, y * Matrix.CASE_SIZE - 5 - 3 * Matrix.CASE_SIZE/4));
+			f.setPosture(Sprite.goUp2);
+		}
+		else if(direction.equals("sud")) {
+			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3, y * Matrix.CASE_SIZE - 5 + 3 * Matrix.CASE_SIZE/4));
+			f.setPosture(Sprite.goDown2);
+		}
+		
+    	setChanged();
+    	notifyObservers(f.clone());
+
+		if(direction.equals("est")) {
+			f.setCoord(new Coord((x + 1) * Matrix.CASE_SIZE - 3, y * Matrix.CASE_SIZE - 5));
+			f.setPosture(Sprite.showRight);
+		}
+		else if(direction.equals("ouest")) {
+			f.setCoord(new Coord((x - 1) * Matrix.CASE_SIZE - 3, y * Matrix.CASE_SIZE - 5));
+			f.setPosture(Sprite.showLeft);
+		}
+		else if(direction.equals("nord")) {
+			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3, (y - 1) * Matrix.CASE_SIZE - 5));
+			f.setPosture(Sprite.showUp);
+		}
+		else if(direction.equals("sud")) {
+			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3, (y + 1) * Matrix.CASE_SIZE - 5));
+			f.setPosture(Sprite.showDown);
+		}
+		
+    	setChanged();
+    	notifyObservers(f.clone());
 	}
 
 	/**
