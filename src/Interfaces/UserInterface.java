@@ -18,7 +18,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 
 import Characters.Figure;
 import Games.GameEngine;
@@ -84,26 +83,27 @@ public class UserInterface implements ActionListener
 					if(imageURL == null) {
 						System.out.println("Image non trouv\u00e9e.");
 					}
-					else {
-						final BufferedImage bg = ImageIO.read(imageURL);
-						SwingUtilities.invokeLater(new Runnable() {
-							public void run() {
-								//characPan.clearFigures();
-								imgPan.setBgImage(bg);
-								int xPos = (imgPan.getWidth()/2) - (imgPan.getBgImage().getWidth()/2);
-								int yPos = (imgPan.getHeight()/2) - (imgPan.getBgImage().getHeight()/2);
-								//characPan.setLocation(xPos, yPos);
-								//characPan.setSize(new Dimension(imgPan.getBgImage().getWidth(), imgPan.getBgImage().getHeight()));
-								//characPan.addFigure(engine.getGameModel().getPlayer().getFigure().clone());
-								characPan.setImgPanPos(xPos, yPos);
-								characPan.setLabel();
-								//characPan.setLabel(xPos, yPos, engine.getGameModel().getPlayer().getFigure().clone());
-								//characPan.setIcon(new ImageIcon(engine.getGameModel().getPlayer().getFigure().clone().getSprite().getObject(engine.getGameModel().getPlayer().getFigure().clone().getPosture())));
-								//characPan.setLocation(xPos + engine.getGameModel().getPlayer().getFigure().clone().getCoord().getX(), yPos + engine.getGameModel().getPlayer().getFigure().clone().getCoord().getY());
-								System.out.println("Repaint at : "+characPan.getLocation());
-								characPan.repaint();
-							}
-						});
+					BufferedImage bg = ImageIO.read(imageURL);
+					try {
+						Animation.sem.acquire();
+
+						engine.getGameModel().getPlayer().reloadFigureCoord();
+
+						imgPan.setBgImage(bg);
+
+						int xPos = (imgPan.getWidth()/2) - (bg.getWidth()/2);
+						int yPos = (imgPan.getHeight()/2) - (bg.getHeight()/2);
+
+						characPan.setImgPanPos(xPos, yPos);
+						characPan.setLabel();
+
+						imgPan.repaint();
+
+						characPan.repaint();
+
+						Animation.sem.release();
+					} catch(InterruptedException e) {
+						e.printStackTrace();
 					}
 				} catch (IOException e) {
 					System.out.println("URL does'nt exist...");
@@ -111,141 +111,11 @@ public class UserInterface implements ActionListener
 				}
 			}
 		}).start();
-
-		myFrame.pack();
 	}
 
-	public void showCharacter(Figure f) {
-		//final Figure f = figure.clone();
-		
-		/*new Thread(new Runnable() {
-			public void run() {
-				SwingUtilities.invokeLater(new Runnable() {
-					public void run() {*/
-						//characPan.clearFigures();
-						//characPan.setLocation(xPos, yPos);
-						//characPan.setSize(new Dimension(imgPan.getBgImage().getWidth(), imgPan.getBgImage().getHeight()));
-						//characPan.addFigure(engine.getGameModel().getPlayer().getFigure().clone());
-						characPan.setFigure(f);
-						characPan.setLabel();
-						//characPan.setLabel(xPos, yPos, engine.getGameModel().getPlayer().getFigure().clone());
-						//characPan.setIcon(new ImageIcon(engine.getGameModel().getPlayer().getFigure().clone().getSprite().getObject(engine.getGameModel().getPlayer().getFigure().clone().getPosture())));
-						//characPan.setLocation(xPos + engine.getGameModel().getPlayer().getFigure().clone().getCoord().getX(), yPos + engine.getGameModel().getPlayer().getFigure().clone().getCoord().getY());
-						System.out.println("Repaint at : "+characPan.getLocation());
-						characPan.repaint();
-					/*}
-				});
-			}
-		}).start();
-
-		myFrame.pack();*/
+	public void showCharacter(String dir, Figure f, int x, int y) {
+		new Animation(characPan, x, y, f, dir);
 	}
-
-	public void animateCharacter(String direction) {
-		
-		/*Figure f = engine.getGameModel().getPlayer().getFigure();
-
-		int x = engine.getGameModel().getPlayer().getX();
-		int y = engine.getGameModel().getPlayer().getY();
-
-		if(direction.equals("est")) {
-			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3 + Matrix.CASE_SIZE/4, y * Matrix.CASE_SIZE - 5));
-			f.setPosture(Sprite.goRight1);
-		}
-		else if(direction.equals("ouest")) {
-			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3 - Matrix.CASE_SIZE/4, y * Matrix.CASE_SIZE - 5));
-			f.setPosture(Sprite.goLeft1);
-		}
-		else if(direction.equals("nord")) {
-			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3, y * Matrix.CASE_SIZE - 5 - Matrix.CASE_SIZE/4));
-			f.setPosture(Sprite.goUp1);
-		}
-		else if(direction.equals("sud")) {
-			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3, y * Matrix.CASE_SIZE - 5 + Matrix.CASE_SIZE/4));
-			f.setPosture(Sprite.goDown1);
-		}
-
-		final Figure f1 = f.clone();
-
-		if(direction.equals("est")) {
-			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3 + Matrix.CASE_SIZE/2, y * Matrix.CASE_SIZE - 5));
-			f.setPosture(Sprite.showRight);
-		}
-		else if(direction.equals("ouest")) {
-			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3 - Matrix.CASE_SIZE/2, y * Matrix.CASE_SIZE - 5));
-			f.setPosture(Sprite.showLeft);
-		}
-		else if(direction.equals("nord")) {
-			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3, y * Matrix.CASE_SIZE - 5 - Matrix.CASE_SIZE/2));
-			f.setPosture(Sprite.showUp);
-		}
-		else if(direction.equals("sud")) {
-			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3, y * Matrix.CASE_SIZE - 5 + Matrix.CASE_SIZE/2));
-			f.setPosture(Sprite.showDown);
-		}
-
-		final Figure f2 = f.clone();
-
-		if(direction.equals("est")) {
-			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3 + 3 * Matrix.CASE_SIZE/4, y * Matrix.CASE_SIZE - 5));
-			f.setPosture(Sprite.goRight2);
-		}
-		else if(direction.equals("ouest")) {
-			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3 - 3 * Matrix.CASE_SIZE/4, y * Matrix.CASE_SIZE - 5));
-			f.setPosture(Sprite.goLeft2);
-		}
-		else if(direction.equals("nord")) {
-			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3, y * Matrix.CASE_SIZE - 5 - 3 * Matrix.CASE_SIZE/4));
-			f.setPosture(Sprite.goUp2);
-		}
-		else if(direction.equals("sud")) {
-			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3, y * Matrix.CASE_SIZE - 5 + 3 * Matrix.CASE_SIZE/4));
-			f.setPosture(Sprite.goDown2);
-		}
-
-		final Figure f3 = f.clone();
-
-		if(direction.equals("est")) {
-			f.setCoord(new Coord((x + 1) * Matrix.CASE_SIZE - 3, y * Matrix.CASE_SIZE - 5));
-			f.setPosture(Sprite.showRight);
-		}
-		else if(direction.equals("ouest")) {
-			f.setCoord(new Coord((x - 1) * Matrix.CASE_SIZE - 3, y * Matrix.CASE_SIZE - 5));
-			f.setPosture(Sprite.showLeft);
-		}
-		else if(direction.equals("nord")) {
-			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3, (y - 1) * Matrix.CASE_SIZE - 5));
-			f.setPosture(Sprite.showUp);
-		}
-		else if(direction.equals("sud")) {
-			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3, (y + 1) * Matrix.CASE_SIZE - 5));
-			f.setPosture(Sprite.showDown);
-		}
-
-		final Figure f4 = f.clone();
-
-		new Thread(new Runnable() {
-			public void run() {
-				SwingUtilities.invokeLater(new Runnable() {
-					public void run() {
-						/*characPan.addFigure(f1);
-						characPan.addFigure(f2);
-						characPan.addFigure(f3);
-						characPan.addFigure(f4);
-						characPan.setFigure(f1);
-						characPan.setLabel();
-						characPan.setFigure(f2);
-						characPan.setLabel();
-						characPan.setFigure(f3);
-						characPan.setLabel();
-						characPan.setFigure(f4);
-						characPan.setLabel();
-					}
-				});
-			}
-		}).start();*/
-	}
-
 
 	/**
 	 * Enable or disable input in the input field.
@@ -289,13 +159,11 @@ public class UserInterface implements ActionListener
 			e.printStackTrace();
 		}
 		imgPan.setPreferredSize(new Dimension(1000, 527));
+		imgPan.setSize(new Dimension(1000, 527));
 
 		int xPos = (imgPan.getWidth()/2) - (imgPan.getBgImage().getWidth()/2);
 		int yPos = (imgPan.getHeight()/2) - (imgPan.getBgImage().getHeight()/2);
 		characPan = new CharacLabel(xPos, yPos, engine.getGameModel().getPlayer().getFigure());
-		/*characPan.setOpaque(false);
-		this.characPan.setPreferredSize(new Dimension(imgPan.getBgImage().getWidth(), imgPan.getBgImage().getHeight()));
-		this.characPan.setLocation(xPos, yPos);*/
 
 		imgPan.add(characPan);
 
@@ -318,6 +186,8 @@ public class UserInterface implements ActionListener
 		myFrame.setResizable(false);
 		myFrame.setVisible(true);
 		myFrame.requestFocus();
+		
+		characPan.setLabel();
 	} //createGUI()
 
 	/**

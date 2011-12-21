@@ -30,6 +30,7 @@ public class GameModel extends Observable
     private Player player;
     private ArrayList<NPC> nPCList;
     private SpriteSheet spriteSheet;
+    private Boolean waiting;
 
     private static String[] exitStrings = {"nord", "sud", "est", "ouest", "haut", "bas"};
     private static String aleaS="";
@@ -47,6 +48,7 @@ public class GameModel extends Observable
 
 		Figure f = new Figure(spriteSheet.getSprite(2, 5), new Coord(3 * Matrix.CASE_SIZE - 3, 3 * Matrix.CASE_SIZE - 5), Sprite.showDown);
         player = new Player(Room.getAllRoom("gr"), "Mamy Ginette", 50, 100, 100, 3, 3, f);
+        waiting = false;
     } //GameModel()
 
     /**
@@ -396,90 +398,10 @@ public class GameModel extends Observable
     }
 
     private void moveAnimation(String direction) {
-    	Figure f = player.getFigure();
-    	
-    	int x = player.getX();
-		int y = player.getY();
-
-		if(direction.equals("est")) {
-			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3 + Matrix.CASE_SIZE/4, y * Matrix.CASE_SIZE - 5));
-			f.setPosture(Sprite.goRight1);
-		}
-		else if(direction.equals("ouest")) {
-			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3 - Matrix.CASE_SIZE/4, y * Matrix.CASE_SIZE - 5));
-			f.setPosture(Sprite.goLeft1);
-		}
-		else if(direction.equals("nord")) {
-			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3, y * Matrix.CASE_SIZE - 5 - Matrix.CASE_SIZE/4));
-			f.setPosture(Sprite.goUp1);
-		}
-		else if(direction.equals("sud")) {
-			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3, y * Matrix.CASE_SIZE - 5 + Matrix.CASE_SIZE/4));
-			f.setPosture(Sprite.goDown1);
-		}
-		
+    	this.setWaiting();
     	setChanged();
-    	notifyObservers(f.clone());
-
-		if(direction.equals("est")) {
-			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3 + Matrix.CASE_SIZE/2, y * Matrix.CASE_SIZE - 5));
-			f.setPosture(Sprite.showRight);
-		}
-		else if(direction.equals("ouest")) {
-			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3 - Matrix.CASE_SIZE/2, y * Matrix.CASE_SIZE - 5));
-			f.setPosture(Sprite.showLeft);
-		}
-		else if(direction.equals("nord")) {
-			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3, y * Matrix.CASE_SIZE - 5 - Matrix.CASE_SIZE/2));
-			f.setPosture(Sprite.showUp);
-		}
-		else if(direction.equals("sud")) {
-			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3, y * Matrix.CASE_SIZE - 5 + Matrix.CASE_SIZE/2));
-			f.setPosture(Sprite.showDown);
-		}
-		
-    	setChanged();
-    	notifyObservers(f.clone());
-
-		if(direction.equals("est")) {
-			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3 + 3 * Matrix.CASE_SIZE/4, y * Matrix.CASE_SIZE - 5));
-			f.setPosture(Sprite.goRight2);
-		}
-		else if(direction.equals("ouest")) {
-			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3 - 3 * Matrix.CASE_SIZE/4, y * Matrix.CASE_SIZE - 5));
-			f.setPosture(Sprite.goLeft2);
-		}
-		else if(direction.equals("nord")) {
-			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3, y * Matrix.CASE_SIZE - 5 - 3 * Matrix.CASE_SIZE/4));
-			f.setPosture(Sprite.goUp2);
-		}
-		else if(direction.equals("sud")) {
-			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3, y * Matrix.CASE_SIZE - 5 + 3 * Matrix.CASE_SIZE/4));
-			f.setPosture(Sprite.goDown2);
-		}
-		
-    	setChanged();
-    	notifyObservers(f.clone());
-
-		if(direction.equals("est")) {
-			f.setCoord(new Coord((x + 1) * Matrix.CASE_SIZE - 3, y * Matrix.CASE_SIZE - 5));
-			f.setPosture(Sprite.showRight);
-		}
-		else if(direction.equals("ouest")) {
-			f.setCoord(new Coord((x - 1) * Matrix.CASE_SIZE - 3, y * Matrix.CASE_SIZE - 5));
-			f.setPosture(Sprite.showLeft);
-		}
-		else if(direction.equals("nord")) {
-			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3, (y - 1) * Matrix.CASE_SIZE - 5));
-			f.setPosture(Sprite.showUp);
-		}
-		else if(direction.equals("sud")) {
-			f.setCoord(new Coord(x * Matrix.CASE_SIZE - 3, (y + 1) * Matrix.CASE_SIZE - 5));
-			f.setPosture(Sprite.showDown);
-		}
-		
-    	setChanged();
-    	notifyObservers(f.clone());
+    	notifyObservers(direction);
+    	while(this.isWaiting()){}
 	}
 
 	/**
@@ -653,5 +575,17 @@ public class GameModel extends Observable
     {
         return "\n" + "Vous utilisez l'objet " + item + "." + "\n";
     } //getuseItemString(.)
+    
+    public void setWaiting() {
+    	waiting = true;
+    }
+    
+    public void setFree() {
+    	waiting = false;
+    }
+    
+    public Boolean isWaiting() {
+    	return waiting;
+    }
 
 } //GameModel

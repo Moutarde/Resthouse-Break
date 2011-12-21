@@ -138,11 +138,16 @@ public class Player
 			System.out.println("Wrong direction : " + direction);
 		}
 	}
-	
+
 	public void setPosition(Coord c) {
 		this.xPosition = c.getX();
 		this.yPosition = c.getY();
+
 		this.figure.setCoord(new Coord(c.getX() * Matrix.CASE_SIZE - 3, c.getY() * Matrix.CASE_SIZE - 5));
+	}
+	
+	public void reloadFigureCoord() {
+		this.figure.setCoord(new Coord(xPosition * Matrix.CASE_SIZE - 3, yPosition * Matrix.CASE_SIZE - 5));
 	}
     
     /**

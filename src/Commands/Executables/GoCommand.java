@@ -19,9 +19,7 @@ public class GoCommand extends Command
 	/**
 	 * Constructor for objects of class GoCommand
 	 */
-	public GoCommand()
-	{
-	}
+	public GoCommand() {}
 
 	/** 
 	 * Try to go to one direction. If there is an exit, enter the new
@@ -45,6 +43,7 @@ public class GoCommand extends Command
 		String direction = getSecondWord();
 
 		int nextCaseValue = engine.getGameModel().getPlayer().canGoTo(direction);
+
 		if(nextCaseValue == 1) {
 			engine.getGameModel().walk(direction);
 		}
@@ -70,13 +69,13 @@ public class GoCommand extends Command
 					else
 					{
 						for (NPC character : engine.getGameModel().getNPCList())
-	            		{
-	                		if (character.canMove())
-	                		{
-	                    		MovingCharacter mC = (MovingCharacter)character;
-	                    		mC.move(null);
-	                		} //if
-	            		} //foreach
+						{
+							if (character.canMove())
+							{
+								MovingCharacter mC = (MovingCharacter)character;
+								mC.move(null);
+							} //if
+						} //foreach
 
 						engine.getGameModel().walk(direction);
 						engine.getGameModel().goRoom(nextRoom);
@@ -85,12 +84,12 @@ public class GoCommand extends Command
 					} //else
 				}
 			}
-			
+
 			if (engine.getGameModel().getPlayer().getCurrentRoom().getCharacters().containsKey("Nadia"))
-	        {
-	            engine.getTextView().show("\n" + "Nadia : Retournez dans votre chambre, Madame Ginette !" + "\n");
-	            engine.getGameModel().goRoom(Room.getAllRoom("gr"));
-	        }
+			{
+				engine.getTextView().show("\n" + "Nadia : Retournez dans votre chambre, Madame Ginette !" + "\n");
+				engine.getGameModel().goRoom(Room.getAllRoom("gr"));
+			}
 
 			if (engine.getGameModel().getPlayer().getCurrentRoom() == Room.getAllRoom("dehors"))
 			{

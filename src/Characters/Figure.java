@@ -53,7 +53,9 @@ public class Figure {
 	}
 	
 	public Figure clone() {
-		return new Figure(this.sprite, this.coord.clone(), this.posture.clone());
+		Figure f = new Figure(this.sprite, this.coord.clone(), this.posture.clone());
+		f.setMoveDirection(this.moveDirection);
+		return f;
 	}
 	
 	public boolean equals(Figure figure) {

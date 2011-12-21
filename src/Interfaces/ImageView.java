@@ -2,9 +2,7 @@ package Interfaces;
 
 import java.util.Observable;
 import java.util.Observer;
-import java.util.StringTokenizer;
 
-import Characters.Figure;
 import Games.GameModel;
 
 /**
@@ -40,10 +38,11 @@ public class ImageView implements Observer
     	if(arg == null) {
     		gui.showImageAndCharacter();
     	}
-    	else if(arg instanceof Figure) {
-    		gui.showCharacter((Figure)arg);
+    	else if(arg instanceof String && o instanceof GameModel) {
+    		gui.showCharacter((String)arg, ((GameModel)o).getPlayer().getFigure(), ((GameModel)o).getPlayer().getX(), ((GameModel)o).getPlayer().getY());
+    		((GameModel)o).setFree();
     	}
-    	else if(arg instanceof String) {
+    	/*else if(arg instanceof String) {
     		String word1;
             String word2;
 
@@ -64,6 +63,6 @@ public class ImageView implements Observer
             else {
             	System.out.println(word1);
             }
-    	}
+    	}*/
     } //update(.)
 } //ImageView

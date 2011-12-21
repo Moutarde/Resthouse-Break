@@ -34,7 +34,6 @@ public class ImgPan extends JPanel {
 	
 	public void setBgImage(BufferedImage bgImage) {
 		this.bgImage = bgImage;
-		this.repaint();
 	}
 	
 	public BufferedImage getBgImage() {

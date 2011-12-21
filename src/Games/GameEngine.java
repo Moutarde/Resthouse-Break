@@ -2,6 +2,7 @@ package Games;
 
 import Commands.Command;
 import Commands.Parser;
+import Interfaces.Animation;
 import Interfaces.ImageView;
 import Interfaces.TextView;
 import Interfaces.UserInterface;
@@ -57,7 +58,8 @@ public class GameEngine
 
         if(command == null) {
             textView.show("\n" + "Y raconte quoi le petit jeune ?!" + "\n");
-        } else {
+        }
+        else if(Animation.isNotRunning()) {
             command.execute(this);
         }
     } //interpretCommand(.)
